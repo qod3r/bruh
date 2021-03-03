@@ -96,7 +96,7 @@ void SortByDate(struct products p[], int n) {
 }
 
 int GetLineAmount(char *filename) {
-    char c;
+    int c;
     int count = 1;
     FILE *fileLen = fopen(filename, "r");
 
