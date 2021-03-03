@@ -43,6 +43,7 @@ int main() {
     LeaveUrgent(ProductList, lineAmount, currDate);
     printf("%s", "\nПосле сортировки:");
     Print(ProductList, lineAmount);
+    getchar(); getchar();
     return 0;
 }
 
@@ -71,8 +72,8 @@ int GetDiff(struct date dt1, struct date dt2) {
 void LeaveUrgent(struct products p[], int n, struct date currDate) {
     int i, j;
     for (i = 0; i < n; i++) {
-        if (abs(GetDiff(currDate, p[i].relTime)) >= 30) {
-            for (j = i; i < n-1; j++) {
+        if (GetDiff(currDate, p[i].relTime) >= 30 || GetDiff(currDate, p[i].relTime) <= 0) {
+            for (j = i; j < n-1; j++) {
                 p[i] = p[i+1];
             }
             lineAmount--;
