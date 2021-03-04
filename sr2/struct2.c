@@ -20,7 +20,7 @@ int GetLineAmount(char *);
 void ReadFile(struct products[], int, char *);
 void Print(struct products[], int);
 void SortByDate(struct products[], int);
-void LeaveUrgent(struct products [], int, struct date);
+void PrintNeeded(struct products [], int, struct date);
 
 int lineAmount;
 
@@ -40,9 +40,8 @@ int main() {
     ReadFile(ProductList, lineAmount, filename);
     Print(ProductList, lineAmount);
     SortByDate(ProductList, lineAmount);
-    LeaveUrgent(ProductList, lineAmount, currDate);
-    printf("%s", "\nПосле сортировки:");
-    Print(ProductList, lineAmount);
+    printf("%s", "\nПосле сортировки:\n");
+    PrintNeeded(ProductList, lineAmount, currDate);
     getchar(); getchar();
     return 0;
 }
@@ -65,18 +64,16 @@ int GetDiff(struct date dt1, struct date dt2) {
     n2 = dt2.year * 365 + dt2.day;
     for (i = 0; i < dt2.month - 1; i++) 
         n2 += monthdays[i];
-
+    // printf("d1:%d d2:%d\tdiff:%ld\n", dt1.day, dt2.day, n2-n1);
     return (n2-n1);
 }
 
-void LeaveUrgent(struct products p[], int n, struct date currDate) {
-    int i, j;
+void PrintNeeded(struct products p[], int n, struct date currDate) {
+    int i;
     for (i = 0; i < n; i++) {
-        if (GetDiff(currDate, p[i].relTime) >= 30 || GetDiff(currDate, p[i].relTime) <= 0) {
-            for (j = i; j < n-1; j++) {
-                p[i] = p[i+1];
-            }
-            lineAmount--;
+        if ((GetDiff(currDate, p[i].relTime) <= 30) && (GetDiff(currDate, p[i].relTime) >= 0)) {
+            printf("%s\t%.0lf\t%02d.%02d.%d\n", p[i].name, p[i].price, p[i].relTime.day,
+                                    p[i].relTime.month, p[i].relTime.year);
         }
     }
 }
