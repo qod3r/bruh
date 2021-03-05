@@ -5,53 +5,26 @@
 FILE *arrayFile;
 FILE *sortedArrayFile;
  
-void CreateArrayFile(void);
-void BubbleSort(void);
-void SelectionSort(void);
+char * CreateArrayFile(char *);
+void BubbleSort(char *);
+void SelectionSort(char *);
 int ElementsCount(char *);
  
  
  
 int main() {
     setlocale(LC_ALL, "Russian");
-    
-    int menu_choice;
-    
-      do {
-        printf("\n------------- \n");
-        printf("1 - Создать файл \n");
-        printf("2 - Сортировка обменом \n");
-        printf("3 - Сортировка выбором\n");
-        printf("0 - Выйти \n");
-        printf("------------- \n");
- 
-        scanf("%d",&menu_choice);
- 
-        switch(menu_choice) {
-          case 1:
-                CreateArrayFile();
-                break;
-          case 2:
-                BubbleSort();
-                break;
-          case 3:
-                SelectionSort();
-                break;
-          case 0:
-            printf("Пока!\n");
-            break;
-          default:
-            printf("Что-то пошло не так, попробуйте снова\n");
-            break;
-        }
-      } while(menu_choice);
+    char filename[50];
+    CreateArrayFile(filename);
+    BubbleSort(filename);
+    SelectionSort(filename);
     
     return 0;
 }
  
-void CreateArrayFile() {
+char * CreateArrayFile(char *filename) {
     int n = 0;
-    char filename[50];
+    
     
     printf("Введите имя файла(*.txt) ");
     scanf("%s", filename);
@@ -66,6 +39,7 @@ void CreateArrayFile() {
     }
     
     fclose(arrayFile);
+    return filename;
 }
  
 int ElementsCount(char *filename) {
@@ -83,11 +57,7 @@ int ElementsCount(char *filename) {
     return count;
 }
  
-void BubbleSort() {
-    char filename[50];
-    
-    printf("Введите имя файла для чтения(*.txt) ");
-    scanf("%s", filename);
+void BubbleSort(char *filename) {
     int n = ElementsCount(filename);
     arrayFile = fopen(filename, "r");
     
@@ -116,11 +86,7 @@ void BubbleSort() {
     fclose(sortedArrayFile);
 }
  
-void SelectionSort() {
-    char filename[50];
-    
-    printf("Введите имя файла для чтения(*.txt) ");
-    scanf("%s", filename);
+void SelectionSort(char *filename) {
     int n = ElementsCount(filename);
     arrayFile = fopen(filename, "r");
     
